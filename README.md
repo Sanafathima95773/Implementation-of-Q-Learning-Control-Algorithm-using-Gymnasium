@@ -386,7 +386,6 @@ env.close()
 
 ## Output
 
-```text
 Final Q-table:
 
 <img width="296" height="327" alt="image" src="https://github.com/user-attachments/assets/9ca007a5-e755-4c14-afb8-3cc2c75fbec3" />
@@ -406,10 +405,6 @@ Learned Policy:
 
 
 <img width="995" height="540" alt="image" src="https://github.com/user-attachments/assets/822339d3-7613-4189-85eb-e955b9bd0961" />
-
-```
-
----
 
 ## Result
 
