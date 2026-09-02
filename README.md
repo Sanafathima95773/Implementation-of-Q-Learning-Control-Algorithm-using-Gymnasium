@@ -7,16 +7,98 @@ To implement the **Q-Learning control algorithm** using the Gymnasium `FrozenLak
 ---
 
 ## Problem Statement
+Implement a **model-free Q-Learning control algorithm** using the
+Gymnasium `FrozenLake-v1` environment.
 
+The objective is to train an agent that learns the optimal action-value
+function `Q(s,a)` through repeated interaction with the environment.
+
+The agent should:
+
+- Observe the current state.
+- Select an action using an epsilon-greedy strategy.
+- Receive a reward from the environment.
+- Observe the next state.
+- Update the Q-table using the Q-Learning update rule.
+- Gradually reduce exploration during training.
+- Learn a policy that attempts to reach the goal while avoiding holes.
+- Display the final Q-table.
+- Display the estimated state-value function.
+- Display the learned policy.
+- Plot the learning curve.
+- Calculate the average reward obtained over the last 1000 episodes.
+
+---
 
 
 ## Software Requirements
 
 
+### Programming Language
+
+- Python 3
+
+### Libraries
+
+The following Python libraries are required:
+
+```text
+gymnasium
+numpy
+matplotlib
+````
+
+Install the required packages using:
+
+```bash
+pip install gymnasium numpy matplotlib
+```
+
+---
 
 ## Environment Description
 
+The experiment uses the **FrozenLake-v1** environment provided by
+Gymnasium.
 
+FrozenLake is a grid-world reinforcement learning environment in which the
+agent moves across a frozen lake.
+
+The environment contains:
+
+* **Start state (S)** – The initial position of the agent.
+* **Frozen states (F)** – Safe states where the agent can move.
+* **Hole states (H)** – Dangerous states that terminate the episode.
+* **Goal state (G)** – The destination the agent attempts to reach.
+
+The environment uses a **4 × 4 grid**, giving a total of:
+
+```text
+16 states
+```
+
+There are four possible actions:
+
+| Action | Meaning |
+| ------ | ------- |
+| `0`    | Left    |
+| `1`    | Down    |
+| `2`    | Right   |
+| `3`    | Up      |
+
+The environment is created using:
+
+```python
+env = gym.make("FrozenLake-v1", is_slippery=True)
+```
+
+The `is_slippery=True` setting makes the environment stochastic, meaning that
+the agent may not always move exactly in the intended direction.
+
+This makes the learning problem more challenging and allows Q-Learning to
+learn from interaction with a stochastic environment.
+
+---
 
 ## Theory
 
@@ -69,6 +151,37 @@ $$
 ## Algorithm
 
 
+### Q-Learning Algorithm
+
+1. Create the `FrozenLake-v1` environment.
+2. Determine the number of states and actions.
+3. Initialize the Q-table with zeros.
+4. Set the learning rate `α`.
+5. Set the discount factor `γ`.
+6. Initialize the exploration rate `ε`.
+7. Repeat for the specified number of episodes:
+
+   * Reset the environment.
+   * Obtain the initial state.
+   * Select an action using the epsilon-greedy strategy.
+   * Execute the action.
+   * Observe the reward and next state.
+   * Calculate the Q-Learning target.
+   * Update the Q-value.
+   * Move to the next state.
+   * Continue until the episode terminates.
+   * Store the total reward.
+   * Reduce epsilon.
+8. Calculate the state-value function from the Q-table.
+9. Extract the greedy policy from the Q-table.
+10. Display the final Q-table.
+11. Display the estimated state-value function.
+12. Display the learned policy.
+13. Calculate the average reward over the last 1000 episodes.
+14. Plot the learning curve.
+15. Close the environment.
+
+---
 
 ## Python Program
 ```
@@ -300,7 +413,8 @@ Learned Policy:
 
 ## Result
 
-```text
+```
+The Q-Learning algorithm was successfully implemented in FrozenLake-v1, learning Q-values through repeated interaction using Q-table updates and an epsilon-greedy strategy. The learned Q-table produced the state-value function and greedy policy, while the learning curve and final average reward were used to evaluate performance.
 
 
 
@@ -310,11 +424,11 @@ Learned Policy:
 
 ## Inference
 
-```text
+```
+Inference
+The experiment demonstrates that Q-Learning is a model-free control algorithm that learns a suitable policy through trial and error without requiring a predefined environment model. Through exploration and exploitation, the agent improves its Q-values and learns to reach the goal while avoiding holes in the stochastic FrozenLake environment.
 
 
 
 ```
-
----
 
