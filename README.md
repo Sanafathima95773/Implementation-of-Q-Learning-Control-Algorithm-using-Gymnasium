@@ -398,10 +398,8 @@ Estimated State-Value Function:
 <img width="346" height="106" alt="image" src="https://github.com/user-attachments/assets/5d358e78-3460-46b6-a4af-77d232883df5" />
 
 
-
 Learned Policy:
 <img width="467" height="147" alt="image" src="https://github.com/user-attachments/assets/d6bcae9a-11cc-49a3-a67b-929ee0557654" />
-
 
 
 <img width="995" height="540" alt="image" src="https://github.com/user-attachments/assets/822339d3-7613-4189-85eb-e955b9bd0961" />
@@ -414,8 +412,6 @@ The Q-Learning algorithm was successfully implemented in FrozenLake-v1, learning
 
 
 ```
-
----
 
 ## Inference
 
