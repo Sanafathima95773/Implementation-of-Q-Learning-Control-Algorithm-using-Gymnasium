@@ -386,40 +386,30 @@ env.close()
 
 ## Output
 
-Final Q-table:
+### Final Q-table:
 
 <img width="296" height="327" alt="image" src="https://github.com/user-attachments/assets/9ca007a5-e755-4c14-afb8-3cc2c75fbec3" />
 
 
-
-
-Estimated State-Value Function:
+### Estimated State-Value Function:
 
 <img width="346" height="106" alt="image" src="https://github.com/user-attachments/assets/5d358e78-3460-46b6-a4af-77d232883df5" />
 
-
-Learned Policy:
+### Learned Policy:
 <img width="467" height="147" alt="image" src="https://github.com/user-attachments/assets/d6bcae9a-11cc-49a3-a67b-929ee0557654" />
 
-
+### Plot Learning curve:
 <img width="995" height="540" alt="image" src="https://github.com/user-attachments/assets/822339d3-7613-4189-85eb-e955b9bd0961" />
 
 ## Result
 
-```
 The Q-Learning algorithm was successfully implemented in FrozenLake-v1, learning Q-values through repeated interaction using Q-table updates and an epsilon-greedy strategy. The learned Q-table produced the state-value function and greedy policy, while the learning curve and final average reward were used to evaluate performance.
 
 
 
-```
-
 ## Inference
 
-```
 Inference
 The experiment demonstrates that Q-Learning is a model-free control algorithm that learns a suitable policy through trial and error without requiring a predefined environment model. Through exploration and exploitation, the agent improves its Q-values and learns to reach the goal while avoiding holes in the stochastic FrozenLake environment.
 
-
-
-```
 
