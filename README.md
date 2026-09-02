@@ -71,45 +71,229 @@ $$
 
 
 ## Python Program
+```
+# -------------------------------------------------
+# Imports
+# -------------------------------------------------
 
-```python
+import gymnasium as gym
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# -------------------------------------------------
+# Create FrozenLake Environment
+# -------------------------------------------------
+
+env = gym.make("FrozenLake-v1", is_slippery=True)
+
+n_states = env.observation_space.n
+n_actions = env.action_space.n
+
+
+# -------------------------------------------------
+# Hyperparameters
+# -------------------------------------------------
+
+learning_rate = 0.8
+gamma = 0.95
+
+epsilon = 1.0
+epsilon_min = 0.01
+epsilon_decay = 0.995
+
+num_episodes = 20000
+
+
+# -------------------------------------------------
+# Initialize Q-table
+# -------------------------------------------------
+
+Q = np.zeros((n_states, n_actions))
+
+
+# -------------------------------------------------
+# Epsilon-Greedy Action Selection
+# -------------------------------------------------
+
+def choose_action(state, epsilon):
+
+    if np.random.random() < epsilon:
+        return env.action_space.sample()
+
+    return int(np.argmax(Q[state]))
+
 
 # -------------------------------------------------
 # Q-Learning Training
 # -------------------------------------------------
-# Write your code here
+
+episode_rewards = []
+
+for episode in range(num_episodes):
+
+    state, _ = env.reset()
+
+    total_reward = 0
+
+    terminated = False
+    truncated = False
+
+    while not (terminated or truncated):
+
+        # Select action using epsilon-greedy strategy
+        action = choose_action(state, epsilon)
+
+        # Take action in the environment
+        next_state, reward, terminated, truncated, _ = env.step(action)
+
+        # Calculate Q-Learning target
+        if terminated:
+            target = reward
+        else:
+            target = reward + gamma * np.max(Q[next_state])
+
+        # Update Q-value
+        Q[state, action] += learning_rate * (
+            target - Q[state, action]
+        )
+
+        # Move to next state
+        state = next_state
+
+        total_reward += reward
+
+    # Store total reward of the episode
+    episode_rewards.append(total_reward)
+
+    # Reduce exploration gradually
+    epsilon = max(
+        epsilon_min,
+        epsilon * epsilon_decay
+    )
 
 
+# -------------------------------------------------
+# State-Value Function and Learned Policy
+# -------------------------------------------------
+
+state_values = np.max(Q, axis=1)
+
+learned_policy = np.argmax(Q, axis=1)
 
 
+# -------------------------------------------------
+# Display Functions
+# -------------------------------------------------
+
+def print_value_function(values):
+
+    print("\nEstimated State-Value Function:")
+
+    print(
+        np.round(
+            values.reshape(4, 4),
+            3
+        )
+    )
 
 
+def print_policy(policy):
 
+    action_symbols = {
+        0: "L",
+        1: "D",
+        2: "R",
+        3: "U"
+    }
+
+    policy_grid = np.array(
+        [
+            action_symbols[action]
+            for action in policy
+        ]
+    ).reshape(4, 4)
+
+    print("\nLearned Policy:")
+
+    print(policy_grid)
+
+
+# -------------------------------------------------
+# Output
+# -------------------------------------------------
+
+print("\nFinal Q-table:")
+
+print(np.round(Q, 3))
+
+print_value_function(state_values)
+
+print_policy(learned_policy)
+
+average_reward = np.mean(
+    episode_rewards[-1000:]
+)
+
+print(
+    "\nAverage reward over last 1000 episodes:",
+    average_reward
+)
+
+
+# -------------------------------------------------
+# Plot Learning Curve
+# -------------------------------------------------
+
+window = 500
+
+moving_average = np.convolve(
+    episode_rewards,
+    np.ones(window) / window,
+    mode="valid"
+)
+
+plt.figure(figsize=(8, 5))
+
+plt.plot(moving_average)
+
+plt.xlabel("Episode")
+plt.ylabel("Average Reward")
+
+plt.title(
+    "Q-Learning Curve - FrozenLake"
+)
+
+plt.grid(True)
+
+plt.show()
+
+env.close()
 ```
----
 
 ## Output
 
 ```text
 Final Q-table:
 
+<img width="296" height="327" alt="image" src="https://github.com/user-attachments/assets/9ca007a5-e755-4c14-afb8-3cc2c75fbec3" />
 
 
 
 
 Estimated State-Value Function:
 
-
-
+<img width="346" height="106" alt="image" src="https://github.com/user-attachments/assets/5d358e78-3460-46b6-a4af-77d232883df5" />
 
 
 
 Learned Policy:
+<img width="467" height="147" alt="image" src="https://github.com/user-attachments/assets/d6bcae9a-11cc-49a3-a67b-929ee0557654" />
 
 
 
+<img width="995" height="540" alt="image" src="https://github.com/user-attachments/assets/822339d3-7613-4189-85eb-e955b9bd0961" />
 
-Average reward over last 1000 episodes: 
 ```
 
 ---
